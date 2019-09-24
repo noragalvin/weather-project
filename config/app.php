@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Ho_Chi_Minh',
 
     /*
     |--------------------------------------------------------------------------
@@ -122,6 +122,9 @@ return [
     'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
+
+    'weatherbit_domain' => env('WEATHERBIT_DOMAIN', ''),
+    'weatherbit_api_key' => env('WEATHERBIT_API_KEY', ''),
 
     /*
     |--------------------------------------------------------------------------
