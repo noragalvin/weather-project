@@ -11,10 +11,11 @@ use App\City;
 use DB;
 use GuzzleHttp\Client;
 use App\WeatherDaily;
+use App\WeatherHourly;
 
 class CrawlController extends BaseController
 {
-    
+
 
     public function crawl(Request $request)
     {
@@ -34,9 +35,14 @@ class CrawlController extends BaseController
 
     public function crawlDaily(Request $request)
     {
+        // Delete old weather
+        DB::delete('delete from weather_daily');
+        DB::delete('delete from weather_hourly');
+
+        ini_set('max_execution_time', 600); //10 minutes
         // Default cities ID
-        // HN, HCM, ĐN, Nghệ An, Lào Cai
-        $defaultCitiesID = [1581130, 1566083, 1905468, 1559969, 1562412];
+        // HN, HCM, Hai Duong, Hai Phong, Thanh Hoa, Da Lat
+        $defaultCitiesID = [1581130, 1566083, 1581326, 1581298, 1566166, 1584071];
 
         $datetime = Carbon::now()->toDateTimeString();
 
@@ -54,16 +60,16 @@ class CrawlController extends BaseController
                 $date_time_e = $dt->modify('+1 day');
                 $date_time_end = $date_time_e->toDateTimeString();
 
-                if($index == 9) {
-                    $date_time_end = $period->end->format('Y-m-d H:i:s');
-                }
+                // if($index == 9) {
+                //     $date_time_end = $period->end->format('Y-m-d H:i:s');
+                // }
 
                 $date_start = explode(" ", $date_time_start)[0];
                 $date_end = explode(" ", $date_time_end)[0];
 
                 // var_dump($date_start);
                 // var_dump($date_end);
-                
+
                 $query_params = [
                     'city_id' => $city_id,
                     'start_date' => $date_start,
@@ -74,6 +80,7 @@ class CrawlController extends BaseController
                 $this->fetchWeatherAPI($query_params, 'daily');
             }
         }
+        ini_set('max_execution_time', 60); //back to origin
         return $this->success('success');
     }
 
@@ -84,11 +91,11 @@ class CrawlController extends BaseController
     public function crawlCity() {
         try {
             ini_set('memory_limit', '-1');
-            
+
             $path = public_path() . "/city.list.json/city.list.json";
-            
-            $json = json_decode(file_get_contents($path), true); 
-           
+
+            $json = json_decode(file_get_contents($path), true);
+
             // Delete old cities
             DB::delete('delete from cities');
 
@@ -102,20 +109,15 @@ class CrawlController extends BaseController
                     'country' => $c['country'],
                     'coord' => json_encode($c['coord'])
                 ];
-            
-                $insert_data[] = $data;
 
-                // $city = City::create([
-                //     'city_id' => $c['id'],
-                //     'name' => $c['name'],
-                //     'country' => $c['country'],
-                //     'coord' => json_encode($c['coord'])
-                // ]);
+                if ($c['country'] == "VN") {
+                    $insert_data[] = $data;
+                }
             }
 
             $insert_data = collect($insert_data); // Make a collection to use the chunk method
 
-            // it will chunk the dataset in smaller collections containing 500 values each. 
+            // it will chunk the dataset in smaller collections containing 500 values each.
             // Play with the value to get best result
             $chunks = $insert_data->chunk(500);
 
@@ -131,45 +133,93 @@ class CrawlController extends BaseController
     }
 
     private function fetchWeatherAPI($query_params, $type) {
-        // dd(config('app.weatherbit_domain'));
-        $url = config('app.weatherbit_domain') . "/v2.0/history/" . $type;
-        // Make HTTP Request
-        $client = new Client();
-        // $client->getClient()->setDefaultOption('verify', false);
+        try {
+            $url = config('app.weatherbit_domain') . "/v2.0/history/" . $type;
 
-        $res = $client->request("GET", $url, [
-            'query' => $query_params,
-            'verify' => false,
-        ]);
+            // Make HTTP Request
+            $client = new Client();
 
-        if ($res->getStatusCode() == 200) { // 200 OK
-            $response_data = $res->getBody()->getContents();
-            $data_json = json_decode($response_data);
-            // dd($data_json->city_id);
-            $weather_daily = WeatherDaily::where("city_id", $data_json->city_id)->where("datetime", $data_json->data[0]->datetime)->first();
-            if($weather_daily) {
-                return;
+            $res = $client->request("GET", $url, [
+                'query' => $query_params,
+                'verify' => false,
+                'timeout' => 20
+            ]);
+
+            if($type == "daily") {
+                if ($res->getStatusCode() == 200) { // 200 OK
+                    $response_data = $res->getBody()->getContents();
+                    $data_json = json_decode($response_data);
+                    // dd($data_json->city_id);
+                    $weather_daily = WeatherDaily::where("city_id", $data_json->city_id)->where("datetime", $data_json->data[0]->datetime)->first();
+                    if($weather_daily) {
+                        return;
+                    }
+                    $weather_daily = new WeatherDaily();
+                    $weather_daily->city_id = $data_json->city_id;
+                    $weather_daily->rh = $data_json->data[0]->rh;
+                    $weather_daily->max_wind_spd = $data_json->data[0]->max_wind_spd;
+                    $weather_daily->wind_gust_spd = $data_json->data[0]->wind_gust_spd;
+                    $weather_daily->clouds = $data_json->data[0]->clouds;
+                    $weather_daily->precip_gpm = $data_json->data[0]->precip_gpm;
+                    $weather_daily->wind_spd = $data_json->data[0]->wind_spd;
+                    $weather_daily->slp = $data_json->data[0]->slp;
+                    $weather_daily->temp = $data_json->data[0]->temp;
+                    $weather_daily->pres = $data_json->data[0]->pres;
+                    $weather_daily->dewpt = $data_json->data[0]->dewpt;
+                    $weather_daily->precip = $data_json->data[0]->precip;
+                    $weather_daily->wind_dir = $data_json->data[0]->wind_dir;
+                    $weather_daily->max_temp = $data_json->data[0]->max_temp;
+                    $weather_daily->min_temp = $data_json->data[0]->min_temp;
+                    $weather_daily->max_wind_dir = $data_json->data[0]->max_wind_dir;
+                    $weather_daily->snow = $data_json->data[0]->snow;
+                    $weather_daily->datetime = $data_json->data[0]->datetime;
+                    $weather_daily->save();
+
+                    // Crawl hourly
+                    $url = config('app.weatherbit_domain') . "/v2.0/history/hourly";
+
+                    // Make HTTP Request
+                    $client = new Client();
+
+                    $res = $client->request("GET", $url, [
+                        'query' => $query_params,
+                        'verify' => false,
+                        'timeout' => 20
+                    ]);
+
+                    if ($res->getStatusCode() == 200) { // 200 OK
+                        $response_data = $res->getBody()->getContents();
+                        $data_json = json_decode($response_data);
+
+                        foreach($data_json->data as $key1 => $value) {
+                            $weather_hourly = new WeatherHourly();
+                            $weather_hourly->city_id = $data_json->city_id;
+                            $weather_hourly->weather_daily_id = $weather_daily->id;
+                            $weather_hourly->rh = $value->rh;
+                            $weather_hourly->wind_spd = $value->wind_spd;
+                            $weather_hourly->vis = $value->vis;
+                            $weather_hourly->slp = $value->slp;
+                            $weather_hourly->pod = $value->pod;
+                            $weather_hourly->pres = $value->pres;
+                            $weather_hourly->dewpt = $value->dewpt;
+                            $weather_hourly->snow = $value->snow;
+                            $weather_hourly->wind_dir = $value->wind_dir;
+                            $weather_hourly->weather = json_encode($value->weather);
+                            $weather_hourly->app_temp = $value->app_temp;
+                            $weather_hourly->temp = $value->temp;
+                            $weather_hourly->precip = $value->precip;
+                            $weather_hourly->clouds = $value->clouds;
+                            $weather_hourly->datetime = $value->datetime;
+                            $weather_hourly->save();
+                        }
+
+                    }
+
+
+                }
             }
-            $weather_daily = new WeatherDaily();
-            $weather_daily->city_id = $data_json->city_id;
-            $weather_daily->rh = $data_json->data[0]->rh;
-            $weather_daily->max_wind_spd = $data_json->data[0]->max_wind_spd;
-            $weather_daily->wind_gust_spd = $data_json->data[0]->wind_gust_spd;
-            $weather_daily->clouds = $data_json->data[0]->clouds;
-            $weather_daily->precip_gpm = $data_json->data[0]->precip_gpm;
-            $weather_daily->wind_spd = $data_json->data[0]->wind_spd;
-            $weather_daily->slp = $data_json->data[0]->slp;
-            $weather_daily->temp = $data_json->data[0]->temp;
-            $weather_daily->pres = $data_json->data[0]->pres;
-            $weather_daily->dewpt = $data_json->data[0]->dewpt;
-            $weather_daily->precip = $data_json->data[0]->precip;
-            $weather_daily->wind_dir = $data_json->data[0]->wind_dir;
-            $weather_daily->max_temp = $data_json->data[0]->max_temp;
-            $weather_daily->min_temp = $data_json->data[0]->min_temp;
-            $weather_daily->max_wind_dir = $data_json->data[0]->max_wind_dir;
-            $weather_daily->snow = $data_json->data[0]->snow;
-            $weather_daily->datetime = $data_json->data[0]->datetime;
-            $weather_daily->save();
+        } catch(Exception $e) {
+            return;
         }
     }
 }
