@@ -19,5 +19,7 @@
 // Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/search', 'HomeController@search');
 Route::get('/update-weather', 'CrawlController@crawlDaily');
 Route::get("/update-city", 'CrawlController@crawlCity');
+Route::get('/fetch-current', 'CrawlController@crawlCurrent');

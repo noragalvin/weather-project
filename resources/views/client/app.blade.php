@@ -9,7 +9,7 @@
 
 		<!-- Loading third party fonts -->
 		<link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
-		<link href="fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
+		<link href="{{ asset('client/fonts/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
 
 		<!-- Loading main css file -->
 		<link rel="stylesheet" href="{{ asset('client/style.css') }}">
@@ -81,7 +81,8 @@
 		<script src="{{ asset('client/js/jquery-1.11.1.min.js') }}"></script>
 		<script src="{{ asset('client/js/plugins.js') }}"></script>
 		<script src="{{ asset('client/js/app.js') }}"></script>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+        @stack('scripts')
 	</body>
 
 </html>

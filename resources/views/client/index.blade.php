@@ -4,11 +4,12 @@
 
 <div class="hero" data-bg-image="{{ asset('client/images/banner.png') }}">
     <div class="container">
-        <form action="#" class="find-location">
-            <input type="text" placeholder="Find your location...">
-            <input type="submit" value="Find">
+        <form action="/" class="find-location" id="header-search" autocomplete="off">
+            <input autocomplete="off" type="text" class="search-input" name="search" placeholder="Find your location...">
+            <!-- <input type="submit" value="Find"> -->
+            <div id="result">
+            </div>
         </form>
-
     </div>
 </div>
 <div class="forecast-table">
@@ -22,7 +23,7 @@
             <div class="today forecast">
                 <div class="forecast-header">
                     <div class="day">{{ getWeekday($daily->datetime) }}</div>
-                    <!-- <div class="date">6 Oct</div> -->
+                    <div class="date">{{ $daily->datetime }}</div>
                 </div> <!-- .forecast-header -->
                 <div class="forecast-content">
                     <div class="location">Hà Nội</div>
@@ -173,3 +174,32 @@
 </main> <!-- .main-content -->
 
 @endsection
+
+@push("scripts")
+<script type="text/javascript">
+   $('#header-search').on('keyup', function() {
+       var search = $(this).find('.search-input').val();
+       if (search == '') {
+        $("#result").hide()
+       } else {
+           axios.get('/search', {
+               params: {
+                search: search
+               }
+           })
+           .then(res => {
+               let html = "";
+               res.data.result.forEach(e => {
+                html += `<p>${e.name}</p>`;
+               });
+               console.log(html);
+               $("#result").show();
+               $("#result").html(html);
+
+           }).catch(err => {
+               console.log({err: err})
+           });
+       };
+   });
+</script>
+@endpush
