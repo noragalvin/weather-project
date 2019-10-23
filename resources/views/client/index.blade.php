@@ -13,48 +13,177 @@
     </div>
 </div>
 <div class="forecast-table">
-    <div class="container">
+    <div class="container main-daily">
         <div class="forecast-container">
-
             @foreach($weathers_daily as $key => $daily)
 
             <!-- TODO: print current  -->
             @if($key == 0)
+
             <div class="today forecast">
                 <div class="forecast-header">
                     <div class="day">{{ getWeekday($daily->datetime) }}</div>
                     <div class="date">{{ $daily->datetime }}</div>
                 </div> <!-- .forecast-header -->
                 <div class="forecast-content">
-                    <div class="location">Hà Nội</div>
-                    <div class="degree">
-                        <div class="num">{{ $daily->temp }}<sup>o</sup>C</div>
-                        <div class="forecast-icon">
-                            <img src="{{ asset('client/images/icons/icon-1.svg') }}" alt="" width=90>
+                    <div class="isToday">
+                        <div class="location">Ha Noi</div>
+                        <div class="degree">
+                            <div class="num">{{ $daily->temp }}<sup>o</sup>C</div>
+                            <div class="forecast-icon">
+                                <img src="{{ asset('client/images/icons/icon-1.svg') }}" alt="" width=90>
+                            </div>
                         </div>
+                        <span><img src="images/icon-umberella.png" alt="">{{ $daily->rh }}%</span>
+                        <span><img src="images/icon-wind.png" alt="">{{ $daily->wind_dir }}km/h</span>
+                        <!-- <span><img src="images/icon-compass.png" alt="">East</span> -->
                     </div>
-                    <span><img src="images/icon-umberella.png" alt="">{{ $daily->rh }}%</span>
-                    <span><img src="images/icon-wind.png" alt="">{{ $daily->wind_dir }}km/h</span>
-                    <!-- <span><img src="images/icon-compass.png" alt="">East</span> -->
+                    <div class="notToday">
+                        <div class="forecast-icon">
+                            <img src="{{ asset('client/images/icons/icon-3.svg') }}" alt="" width=48>
+                        </div>
+                        <div class="degree">{{ $daily->temp }}<sup>o</sup>C</div>
+                    </div>
+                </div>
+                <div class="hourly">
+                    @foreach($daily->hourly as $keyHourly => $hourly)
+                        <div class="hourly-item"  data-toggle="modal" data-target="#hourly{{$hourly->id}}">
+                            <div class="hourly-title">
+                                <p>{{ $hourly->hour }}</p>
+                            </div>
+                            <div class="hourly-content">
+                                <h2>{{ $hourly->temp }}<sup>o</sup>C</h2>
+                            </div>
+                            <div class="hourly-footer">
+                                <img src="https://www.weatherbit.io/static/img/icons/{{ $hourly->weather_json->icon }}.png" /></img>
+                            </div>
+                        </div>
+
+                        <!-- The Modal -->
+                        <div class="modal" id="hourly{{$hourly->id}}" style="color: #000">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Giờ: {{ $hourly->hour }}</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+
+                                    <img src="https://www.weatherbit.io/static/img/icons/{{ $hourly->weather_json->icon }}.png" /></img>
+                                    <p>Độ ẩm tương đối: {{ $hourly->rh }}%</p>
+                                    <p>Tốc độ gió: {{ $hourly->wind_spd }}m/s</p>
+                                    <p>Áp suất: {{ $hourly->press }}</p>
+                                    <p>Tầm nhìn xa: {{ $hourly->vis}}km</p>
+                                    <p>Mực nước biển: {{ $hourly->slp }}mb</p>
+                                    <p>Thời điểm: {{ $hourly->pod == "d"  ? 'Ngày' : 'Đêm' }}</p>
+                                    <p>Điểm sương: {{ $hourly->dewpt }} C</p>
+                                    <p>Hướng gió: {{ $hourly->wind_dir }} độ</p>
+                                    <p>Nhiệt độ: {{ $hourly->temp }} C</p>
+                                    <p>Lượng mây: {{ $hourly->clouds }} %</p>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    @endforeach
                 </div>
             </div>
+
             @else
             <div class="forecast">
                 <div class="forecast-header">
                     <div class="day">{{ getWeekday($daily->datetime) }}</div>
+                    <div class="date">{{ $daily->datetime }}</div>
                 </div> <!-- .forecast-header -->
                 <div class="forecast-content">
-                    <div class="forecast-icon">
-                        <img src="{{ asset('client/images/icons/icon-3.svg') }}" alt="" width=48>
+                    <div class="isToday">
+                        <div class="location">Ha Noi</div>
+                        <div class="degree">
+                            <div class="num">{{ $daily->temp }}<sup>o</sup>C</div>
+                            <div class="forecast-icon">
+                                <img src="{{ asset('client/images/icons/icon-1.svg') }}" alt="" width=90>
+                            </div>
+                        </div>
+                        <span><img src="images/icon-umberella.png" alt="">{{ $daily->rh }}%</span>
+                        <span><img src="images/icon-wind.png" alt="">{{ $daily->wind_dir }}km/h</span>
+                        <!-- <span><img src="images/icon-compass.png" alt="">East</span> -->
                     </div>
-                    <div class="degree">{{ $daily->temp }}<sup>o</sup>C</div>
+                    <div class="notToday">
+                        <div class="forecast-icon">
+                            <img src="{{ asset('client/images/icons/icon-3.svg') }}" alt="" width=48>
+                        </div>
+                        <div class="degree">{{ $daily->temp }}<sup>o</sup>C</div>
+                    </div>
+                </div>
+                <div class="hourly">
+                    @foreach($daily->hourly as $hourly)
+                        <div class="hourly-item"  data-toggle="modal" data-target="#hourly{{$hourly->id}}">
+                            <div class="hourly-title">
+                                <p>{{ $hourly->hour }}</p>
+                            </div>
+                            <div class="hourly-content">
+                                <h2>{{ $hourly->temp }}<sup>o</sup>C</h2>
+                            </div>
+                            <div class="hourly-footer">
+                                <img src="https://www.weatherbit.io/static/img/icons/{{ $hourly->weather_json->icon }}.png" /></img>
+                            </div>
+                        </div>
+
+                        <!-- The Modal -->
+                        <div class="modal" id="hourly{{$hourly->id}}" style="color: #000">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Giờ: {{ $hourly->hour }}</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+
+                                    <img src="https://www.weatherbit.io/static/img/icons/{{ $hourly->weather_json->icon }}.png" /></img>
+                                    <p>Độ ẩm tương đối: {{ $hourly->rh }}%</p>
+                                    <p>Tốc độ gió: {{ $hourly->wind_spd }}m/s</p>
+                                    <p>Áp suất: {{ $hourly->press }}</p>
+                                    <p>Tầm nhìn xa: {{ $hourly->vis}}km</p>
+                                    <p>Mực nước biển: {{ $hourly->slp }}mb</p>
+                                    <p>Thời điểm: {{ $hourly->pod == "d"  ? 'Ngày' : 'Đêm' }}</p>
+                                    <p>Điểm sương: {{ $hourly->dewpt }} C</p>
+                                    <p>Hướng gió: {{ $hourly->wind_dir }} độ</p>
+                                    <p>Nhiệt độ: {{ $hourly->temp }} C</p>
+                                    <p>Lượng mây: {{ $hourly->clouds }} %</p>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
             @endif
 
-            @endforeach
 
+
+            @endforeach
         </div>
+
     </div>
 </div>
 <main class="main-content">
@@ -122,55 +251,6 @@
         </div>
     </div>
 
-    <div class="fullwidth-block">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h2 class="section-title">Application features</h2>
-                    <ul class="arrow-feature">
-                        <li>
-                            <h3>Natus error sit voluptatem accusantium</h3>
-                            <p>Doloremque laudantium totam rem aperiam Inventore veritatis et quasi architecto beatae vitae.</p>
-                        </li>
-                        <li>
-                            <h3>Natus error sit voluptatem accusantium</h3>
-                            <p>Doloremque laudantium totam rem aperiam Inventore veritatis et quasi architecto beatae vitae.</p>
-                        </li>
-                        <li>
-                            <h3>Natus error sit voluptatem accusantium</h3>
-                            <p>Doloremque laudantium totam rem aperiam Inventore veritatis et quasi architecto beatae vitae.</p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h2 class="section-title">Weather analyssis</h2>
-                    <ul class="arrow-list">
-                        <li><a href="#">Accusantium doloremque laudantium rem aperiam</a></li>
-                        <li><a href="#">Eaque ipsa quae ab illo inventore veritatis quasi</a></li>
-                        <li><a href="#">Architecto beatae vitae dicta sunt explicabo</a></li>
-                        <li><a href="#">Nemo enim ipsam voluptatem quia voluptas</a></li>
-                        <li><a href="#">Aspernatur aut odit aut fugit, sed quia consequuntur</a></li>
-                        <li><a href="#">Magni dolores eos qui ratione voluptatem sequi</a></li>
-                        <li><a href="#">Neque porro quisquam est qui dolorem ipsum quia</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h2 class="section-title">Awesome Photos</h2>
-                    <div class="photo-grid">
-                        <a href="#"><img src="images/thumb-1.jpg" alt="#"></a>
-                        <a href="#"><img src="images/thumb-2.jpg" alt="#"></a>
-                        <a href="#"><img src="images/thumb-3.jpg" alt="#"></a>
-                        <a href="#"><img src="images/thumb-4.jpg" alt="#"></a>
-                        <a href="#"><img src="images/thumb-5.jpg" alt="#"></a>
-                        <a href="#"><img src="images/thumb-6.jpg" alt="#"></a>
-                        <a href="#"><img src="images/thumb-7.jpg" alt="#"></a>
-                        <a href="#"><img src="images/thumb-8.jpg" alt="#"></a>
-                        <a href="#"><img src="images/thumb-9.jpg" alt="#"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </main> <!-- .main-content -->
 
 @endsection
@@ -201,5 +281,11 @@
            });
        };
    });
+
+   $(".forecast").click(function(e) {
+       e.preventDefault();
+       $('.forecast').removeClass('today');
+    $(this).addClass("today");
+   })
 </script>
 @endpush

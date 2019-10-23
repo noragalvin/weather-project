@@ -340,6 +340,7 @@ form input[type="reset"] {
     color: white;
 }
 
+
 .map {
     height: 220px;
 }
@@ -1783,15 +1784,16 @@ form input[type="reset"] {
     display: table;
     table-layout: fixed;
     width: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
     border-radius: 10px;
     margin-top: -150px;
-    margin-bottom: 50px;
+    margin-bottom: 350px;
 }
 
 .forecast-container .forecast {
     display: table-cell;
     vertical-align: top;
+    /* position: relative; */
 }
 
 .forecast-container .forecast:nth-child(even) {
@@ -2441,6 +2443,7 @@ form input[type="reset"] {
     border-radius: 10px;
     max-height: 300px;
     overflow: auto;
+    z-index: 1;
 }
 
 #result p {
@@ -2451,3 +2454,63 @@ form input[type="reset"] {
 #result p:hover {
     background:#323444;
 }
+
+
+.main-daily {
+    position: relative;
+}
+
+.hourly {
+    margin-top: 10px;
+    background:#323544;
+    width:97%;
+    height: 200px;
+    position: absolute;
+    display: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    color: #fff;
+    overflow: auto;
+    left: 20px;
+}
+
+
+.hourly-item {
+    min-width: 100px;
+    text-align: center;
+}
+
+.hourly-item:nth-child(even) {
+    background: #262936;
+}
+
+
+.today .hourly {
+    display: flex;
+}
+
+.hourly-footer img {
+    width: 30px;
+}
+
+.forecast .date {
+    display: none;
+}
+
+.today .date {
+    display: block;
+}
+
+.forecast .isToday {
+    display: none;
+}
+
+.today .isToday {
+    display: block;
+}
+
+.today .notToday {
+    display: none;
+}
+
+

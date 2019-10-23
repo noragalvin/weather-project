@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $weathers_daily = WeatherDaily::orderBy('datetime', 'desc')->where('city_id', 1581130)->limit(7)->get();
+        $weathers_daily = WeatherDaily::orderBy('datetime', 'asc')->where('city_id', 1581130)->limit(7)->get();
 
         return view('client.index', compact("weathers_daily"));
     }
