@@ -17,6 +17,7 @@ class CreateCitiesTable extends Migration
             $table->bigIncrements('id');
             $table->integer("city_id");
             $table->string("name");
+            $table->integer("region");
             $table->string("country");
             $table->string("coord");
             $table->timestamps();

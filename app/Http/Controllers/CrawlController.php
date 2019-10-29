@@ -124,7 +124,8 @@ class CrawlController extends BaseController
                     'city_id' => $c['id'],
                     'name' => $c['name'],
                     'country' => $c['country'],
-                    'coord' => json_encode($c['coord'])
+                    'coord' => json_encode($c['coord']),
+                    'region' => array_key_exists('region', $c) ? $c['region'] : 0
                 ];
 
                 if ($c['country'] == "VN") {
