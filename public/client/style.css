@@ -264,12 +264,12 @@ html {
 }
 
 body {
-    color: #bfc1c8;
+    color:  #333333;
     font-family: "Roboto", "Open Sans", sans-serif;
     font-size: 14px;
     font-weight: 300;
     line-height: 1.5;
-    background: #1e202b;
+    background: #FFFFFF;
 }
 
 h1,
@@ -337,7 +337,7 @@ form input[type="reset"] {
     background: #009ad8;
     padding: 10px 20px;
     border-radius: 30px;
-    color: white;
+    color: #333333;
 }
 
 
@@ -1630,14 +1630,14 @@ form input[type="reset"] {
     margin-bottom: 5px;
     font-size: 16px;
     font-size: 1.1428571429em;
-    color: white;
+    color: #333333;
 }
 
 .site-header .branding .site-description {
     font-size: 10px;
     font-size: 0.7142857143em;
     display: block;
-    color: #bfc1c8;
+    color:  #333333;
 }
 
 .main-navigation {
@@ -1652,7 +1652,7 @@ form input[type="reset"] {
 .main-navigation .menu-toggle {
     background: none;
     border: 2px solid transparent;
-    color: white;
+    color: #333333;
     padding: 20px;
     border-radius: 40px;
     -webkit-transition: .3s ease;
@@ -1702,7 +1702,7 @@ form input[type="reset"] {
     padding: 5px 25px;
     border: 2px solid transparent;
     border-radius: 30px;
-    color: white;
+    color: #333333;
     -webkit-transition: .3s ease;
     transition: .3s ease;
     font-weight: 400;
@@ -1727,7 +1727,7 @@ form input[type="reset"] {
 }
 
 .mobile-navigation .menu {
-    background: #262936;
+    background: #EDEBEB;
     list-style: none;
     text-align: center;
     border-radius: 10px;
@@ -1737,7 +1737,7 @@ form input[type="reset"] {
 .mobile-navigation .menu a {
     padding: 20px;
     display: block;
-    color: white;
+    color: #333333;
 }
 
 .mobile-navigation .menu .menu-item {
@@ -1766,8 +1766,8 @@ form input[type="reset"] {
 .find-location input[type="text"] {
     width: 100%;
     padding: 20px 50px 20px 20px;
-    background: #1e202b;
-    color: white;
+    background: #FFFFFF;
+    color: #333333;
 }
 
 .find-location input[type="submit"] {
@@ -1780,7 +1780,7 @@ form input[type="reset"] {
 
 .forecast-container {
     width: 100%;
-    background: #323544;
+    background: #F0F0F0;
     display: table;
     table-layout: fixed;
     width: 100%;
@@ -1797,7 +1797,7 @@ form input[type="reset"] {
 }
 
 .forecast-container .forecast:nth-child(even) {
-    background-color: #262936;
+    background-color: #EDEBEB;
 }
 
 @media screen and (max-width: 990px) {
@@ -1895,7 +1895,7 @@ form input[type="reset"] {
 .forecast-container .forecast .forecast-content .degree {
     font-size: 24px;
     font-size: 1.7142857143em;
-    color: white;
+    color: #333333;
     font-weight: 700;
 }
 
@@ -1912,7 +1912,7 @@ form input[type="reset"] {
     font-size: 36px;
     font-size: 2.5714285714em;
     font-weight: 300;
-    color: white;
+    color: #333333;
 }
 
 .filter {
@@ -1920,7 +1920,7 @@ form input[type="reset"] {
 }
 
 .filter-control {
-    border: 2px solid #262936;
+    border: 2px solid #EDEBEB;
     padding: 5px 5px 5px 20px;
     border-radius: 30px;
     display: inline-block;
@@ -1935,7 +1935,7 @@ form input[type="reset"] {
 }
 
 .select.control {
-    background: #262936;
+    background: #EDEBEB;
     border-radius: 40px;
     overflow: hidden;
     display: inline-block;
@@ -1966,7 +1966,7 @@ form input[type="reset"] {
     outline: none;
     appearance: none;
     -webkit-appearance: none;
-    color: white;
+    color: #333333;
 }
 
 .live-camera {
@@ -2002,7 +2002,7 @@ form input[type="reset"] {
 
 .live-camera .location {
     margin-bottom: 5px;
-    color: white;
+    color: #333333;
     font-weight: 300;
 }
 
@@ -2034,7 +2034,7 @@ form input[type="reset"] {
 }
 
 .news h3 a {
-    color: white;
+    color: #333333;
 }
 
 .arrow-feature {
@@ -2059,7 +2059,7 @@ form input[type="reset"] {
 .arrow-feature li h3 {
     font-size: 14px;
     font-size: 1em;
-    color: white;
+    color: #333333;
 }
 
 .arrow-list {
@@ -2077,7 +2077,7 @@ form input[type="reset"] {
 }
 
 .arrow-list a {
-    color: white;
+    color: #333333;
 }
 
 .arrow-list a:hover {
@@ -2102,7 +2102,7 @@ form input[type="reset"] {
 }
 
 .breadcrumb {
-    background: #262936;
+    background: #EDEBEB;
     border-radius: 40px;
     padding: 20px 30px;
     font-size: 13px;
@@ -2110,7 +2110,7 @@ form input[type="reset"] {
 }
 
 .breadcrumb a {
-    color: #bfc1c8;
+    color:  #333333;
 }
 
 .breadcrumb a:after {
@@ -2128,7 +2128,7 @@ form input[type="reset"] {
 }
 
 .breadcrumb span {
-    color: white;
+    color: #333333;
 }
 
 .post {
@@ -2148,7 +2148,7 @@ form input[type="reset"] {
     font-size: 30px;
     font-size: 2.1428571429em;
     font-weight: 300;
-    color: white;
+    color: #333333;
 }
 
 .post .featured-image {
@@ -2195,7 +2195,7 @@ form input[type="reset"] {
     min-height: 190px;
     border-radius: 10px;
     overflow: hidden;
-    background: #262936;
+    background: #EDEBEB;
     margin-bottom: 30px;
 }
 
@@ -2218,7 +2218,7 @@ form input[type="reset"] {
 }
 
 .photo .photo-title a {
-    color: white;
+    color: #333333;
 }
 
 .star-rating {
@@ -2234,7 +2234,7 @@ form input[type="reset"] {
 
 .star-rating:before {
     content: "\f005\f005\f005\f005\f005";
-    color: #1e202b;
+    color: #FFFFFF;
     float: left;
     top: 0;
     left: 0;
@@ -2260,7 +2260,7 @@ form input[type="reset"] {
 }
 
 .contact-details {
-    background: #262936;
+    background: #EDEBEB;
     border-radius: 10px;
     overflow: hidden;
 }
@@ -2287,7 +2287,7 @@ form input[type="reset"] {
 
 .contact-details a {
     margin-right: 20px;
-    color: #bfc1c8;
+    color:  #333333;
 }
 
 .contact-details a img {
@@ -2308,7 +2308,7 @@ form input[type="reset"] {
     width: 100%;
     padding: 15px;
     margin-bottom: 10px;
-    color: white;
+    color: #333333;
     border: 2px solid #393c48;
     background: transparent;
 }
@@ -2329,7 +2329,7 @@ form input[type="reset"] {
 }
 
 .sidebar .widget {
-    background: #262936;
+    background: #EDEBEB;
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 30px;
@@ -2375,7 +2375,7 @@ form input[type="reset"] {
 }
 
 .sidebar .widget.top-rated .entry-title a {
-    color: #bfc1c8;
+    color:  #333333;
 }
 
 .sidebar .widget.top-rated .rating strong {
@@ -2386,7 +2386,7 @@ form input[type="reset"] {
  * Footer Styles
  */
 .site-footer {
-    background: #262936;
+    background: #EDEBEB;
     padding: 50px 0;
 }
 
@@ -2397,9 +2397,9 @@ form input[type="reset"] {
 
 .site-footer .subscribe-form input[type="text"] {
     padding: 20px 100px 20px 20px;
-    background: #1e202b;
+    background: #FFFFFF;
     width: 100%;
-    color: white;
+    color: #333333;
 }
 
 .site-footer .subscribe-form input[type="submit"] {
@@ -2414,7 +2414,7 @@ form input[type="reset"] {
     height: 40px;
     display: inline-block;
     border-radius: 50%;
-    background: #1e202b;
+    background: #FFFFFF;
     color: #009ad8;
     text-align: center;
     line-height: 2;
@@ -2426,7 +2426,7 @@ form input[type="reset"] {
 
 .site-footer .social-links a:hover {
     background: #009ad8;
-    color: white;
+    color: #333333;
 }
 
 
@@ -2437,7 +2437,7 @@ form input[type="reset"] {
 #result {
     position: absolute;
     width: 100%;
-    background: #1e202b;
+    background: #FFFFFF;
     margin: auto;
     /* padding: 10px; */
     border-radius: 10px;
@@ -2462,14 +2462,14 @@ form input[type="reset"] {
 
 .hourly {
     margin-top: 10px;
-    background:#323544;
+    background:#F0F0F0;
     width:97%;
     height: 200px;
     position: absolute;
     display: none;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    color: #fff;
+    color: #333333;
     overflow: auto;
     left: 20px;
 }
@@ -2481,7 +2481,7 @@ form input[type="reset"] {
 }
 
 .hourly-item:nth-child(even) {
-    background: #262936;
+    background: #EDEBEB;
 }
 
 
@@ -2514,3 +2514,46 @@ form input[type="reset"] {
 }
 
 
+.BantinThuyvan_div {
+    overflow-y: initial !important;
+    height: auto !important;
+}
+
+.btdb_Title {
+    color: #333333;
+    background-color: #EDEBEB;
+    padding: 10px 20px !important;
+}
+
+.dl_Bantindubao {
+    margin-bottom: 50px;
+}
+
+.dl_Bantindubao > tbody > tr > td > table > tbody > tr:nth-child(2) > td {
+    padding-top: 50px;
+}
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: #F90;
+	background-image: -webkit-linear-gradient(90deg,
+	                                          rgba(255, 255, 255, .2) 25%,
+											  transparent 25%,
+											  transparent 50%,
+											  rgba(255, 255, 255, .2) 50%,
+											  rgba(255, 255, 255, .2) 75%,
+											  transparent 75%,
+											  transparent)
+}

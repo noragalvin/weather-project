@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\WeatherDaily;
 use App\City;
+use Sunra\PhpSimple\HtmlDomParser;
 
 class HomeController extends Controller
 {
@@ -19,14 +20,18 @@ class HomeController extends Controller
         $weathers_daily = WeatherDaily::orderBy('datetime', 'asc')->where('city_id', 1581130)->limit(7)->get();
 
         // Default cities ID
-        // Hai Phong, Thanh Hoa, HCM 
+        // Hai Phong, Thanh Hoa, HCM
         $defaultCitiesID = [1581298, 1566166, 1566083];
 
         $north = WeatherDaily::orderBy('datetime', 'asc')->where('city_id', $defaultCitiesID[0])->limit(1)->get();
         $central = WeatherDaily::orderBy('datetime', 'asc')->where('city_id', $defaultCitiesID[1])->limit(1)->get();
         $south = WeatherDaily::orderBy('datetime', 'asc')->where('city_id', $defaultCitiesID[2])->limit(1)->get();
 
-        return view('client.index', compact("weathers_daily", "north", "central", "south"));
+        $html = HtmlDomParser::file_get_html("http://www.nchmf.gov.vn/web/vi-VN/43/Default.aspx", false, null, 0 );
+        // dd($html->find(".BantinThuyvan_div"));
+        $khituongthuyvan = $html->find(".BantinThuyvan_div")[0];
+
+        return view('client.index', compact("weathers_daily", "north", "central", "south", "khituongthuyvan"));
     }
 
     public function search(Request $request) {

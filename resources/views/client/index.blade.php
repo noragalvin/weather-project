@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="hero" data-bg-image="{{ asset('client/images/banner.png') }}">
+<div class="hero" data-bg-image="https://previews.123rf.com/images/_ig0rzh_/_ig0rzh_1501/_ig0rzh_150100029/35596644-weather-forecast-concept-background-variety-weather-conditions-bright-sun-and-blue-sky-dark-stormy-s.jpg">
     <div class="container">
         <form action="/" class="find-location" id="header-search" autocomplete="off">
             <input autocomplete="off" type="text" class="search-input" name="search" placeholder="Find your location...">
@@ -54,8 +54,9 @@
                             <div class="hourly-content">
                                 <h2>{{ $hourly->temp }}<sup>o</sup>C</h2>
                             </div>
-                            <div class="hourly-footer">
+                            <div class="hourly-footer d-flex justify-content-center align-items-center flex-column">
                                 <img src="https://www.weatherbit.io/static/img/icons/{{ $hourly->weather_json->icon }}.png" /></img>
+                                <button class="btn btn-secondary mt-2">Xem</button>
                             </div>
                         </div>
 
@@ -186,73 +187,10 @@
 
     </div>
 </div>
-<main class="main-content">
-    <div class="fullwidth-block">
-        <div class="container">
-            <h2 class="section-title">Live cameras</h2>
-            <div class="row">
-                <div class="col-md-3 col-sm-6">
-                    <div class="live-camera">
-                        <figure class="live-camera-cover"><img src="images/live-camera-1.jpg" alt=""></figure>
-                        <h3 class="location">New York</h3>
-                        <small class="date">8 oct, 8:00AM</small>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="live-camera">
-                        <figure class="live-camera-cover"><img src="images/live-camera-2.jpg" alt=""></figure>
-                        <h3 class="location">Los Angeles</h3>
-                        <small class="date">8 oct, 8:00AM</small>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="live-camera">
-                        <figure class="live-camera-cover"><img src="images/live-camera-3.jpg" alt=""></figure>
-                        <h3 class="location">Chicago</h3>
-                        <small class="date">8 oct, 8:00AM</small>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="live-camera">
-                        <figure class="live-camera-cover"><img src="images/live-camera-4.jpg" alt=""></figure>
-                        <h3 class="location">London</h3>
-                        <small class="date">8 oct, 8:00AM</small>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="fullwidth-block" data-bg-color="#262936">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="news">
-                        <div class="date">06.10</div>
-                        <h3><a href="#">Doloremque laudantium totam sequi </a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo saepe assumenda dolorem modi, expedita voluptatum ducimus necessitatibus. Asperiores quod reprehenderit necessitatibus harum, mollitia, odit et consequatur maxime nisi amet doloremque.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="news">
-                        <div class="date">06.10</div>
-                        <h3><a href="#">Doloremque laudantium totam sequi </a></h3>
-                        <p>Nobis architecto consequatur ab, ea, eum autem aperiam accusantium placeat vitae facere explicabo temporibus minus distinctio cum optio quis, dignissimos eius aspernatur fuga. Praesentium totam, corrupti beatae amet expedita veritatis.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="news">
-                        <div class="date">06.10</div>
-                        <h3><a href="#">Doloremque laudantium totam sequi </a></h3>
-                        <p>Enim impedit officiis placeat qui recusandae doloremque possimus, iusto blanditiis, quam optio delectus maiores. Possimus rerum, velit cum natus eos. Cumque pariatur beatae asperiores, esse libero quas ad dolorem. Voluptates.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</main> <!-- .main-content -->
-
+<div>
+    <h1>Thông tin thời tiết vùng miền ngày {{ date('d-m') }}</h1>
+</div>
+{!! $khituongthuyvan !!}
 @endsection
 
 @push("scripts")
