@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\WeatherDaily;
 use App\City;
-use Sunra\PhpSimple\HtmlDomParser;
+use Goutte\Client;
 
 class HomeController extends Controller
 {
@@ -27,9 +27,13 @@ class HomeController extends Controller
         $central = WeatherDaily::orderBy('datetime', 'asc')->where('city_id', $defaultCitiesID[1])->limit(1)->get();
         $south = WeatherDaily::orderBy('datetime', 'asc')->where('city_id', $defaultCitiesID[2])->limit(1)->get();
 
-        $html = HtmlDomParser::file_get_html("http://www.nchmf.gov.vn/web/vi-VN/43/Default.aspx", false, null, 0 );
+        $client = new Client();
+        $crawler = $client->request('GET', "http://www.nchmf.gov.vn/web/vi-VN/43/Default.aspx");
         // dd($html->find(".BantinThuyvan_div"));
-        $khituongthuyvan = $html->find(".BantinThuyvan_div")[0];
+        $html = $crawler->filter(".BantinThuyvan_div")->each(function($node)  {
+            return $node->html();
+        });
+        $khituongthuyvan = $html[0];
 
         return view('client.index', compact("weathers_daily", "north", "central", "south", "khituongthuyvan"));
     }
